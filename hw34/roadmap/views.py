@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from django.core.exceptions import PermissionDenied
 from django.db import models
 
-from account.models import Account
+from account.models import User
 from .models import Task, Roadmap, Score
 from .forms import TaskForm, TaskEditForm, RoadmapForm
 

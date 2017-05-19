@@ -82,6 +82,13 @@ DATABASES = {
     }
 }
 
+TEST_DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -124,3 +131,5 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'account.User'
+
+PROJECT_HOST = 'todo.ru'

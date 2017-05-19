@@ -29,7 +29,7 @@ class LoginFormView(FormView):
 
 
 class RegisterFormView(FormView):
-    form_class = UserCreationForm
+    form_class = UserCreationForm  #Переопределить!!!!
 
     # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
     # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.

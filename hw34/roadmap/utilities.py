@@ -12,3 +12,8 @@ def monday_of_week_one(yyyy):
     MONDAY = REF_DAY - timedelta(days = DOW)
 
     return MONDAY
+
+def dev(a, b):
+	if b == 0:
+		return
+	return a / b
