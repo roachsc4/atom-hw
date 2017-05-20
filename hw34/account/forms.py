@@ -1,3 +1,5 @@
+from django import forms
+from . import models
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
 # Опять же, спасибо django за готовую форму аутентификации.
@@ -8,6 +10,19 @@ from django.views.generic.base import View
 from django.core.urlresolvers import reverse_lazy
 # login Функция для установки сессионного ключа.
 # По нему django будет определять, выполнил ли вход пользователь.
+
+from .models import User
+
+class UserCreationFormCustom(UserCreationForm):
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=40)
+    last_name = forms.CharField(max_length=40)
+    age = forms.IntegerField(min_value=0)
+
+    class Meta:
+        model = models.User
+        fields = '__all__'#("username", "email", "first_name", "last_name", "age" )
+        #field_classes = {'username': UsernameField}
 
 
 class LoginFormView(FormView):
@@ -29,7 +44,7 @@ class LoginFormView(FormView):
 
 
 class RegisterFormView(FormView):
-    form_class = UserCreationForm  #Переопределить!!!!
+    form_class = UserCreationFormCustom  #Переопределить!!!!
 
     # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
     # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.

@@ -17,7 +17,7 @@ from .utilities import monday_of_week_one
 @login_required(login_url=reverse_lazy('account:login'))
 def task_detail(request, pk):
     task = get_object_or_404(Task, pk=pk)
-    if request.user.account == task.roadmap.account:
+    if request.user == task.roadmap.account: #
         return render(request, 'task.html', {'task': task})
     else:
         raise PermissionDenied
@@ -27,7 +27,7 @@ def task_detail(request, pk):
 def task_new(request, pk):
     action = 'New'
     roadmap = get_object_or_404(Roadmap, pk=pk)
-    if request.user.account == roadmap.account:
+    if request.user == roadmap.account:#
         if request.method == 'POST':
             form = TaskForm(request.POST)
             if form.is_valid():
@@ -45,7 +45,7 @@ def task_new(request, pk):
 def task_update(request, pk):
     task = get_object_or_404(Task, pk=pk)
     action = 'Update'
-    if request.user.account == task.roadmap.account:
+    if request.user == task.roadmap.account:#
         if request.method == 'POST':
             form = TaskEditForm(request.POST, instance=task)
             if form.is_valid():
@@ -66,7 +66,7 @@ def task_update(request, pk):
 def task_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
     roadmap_pk = task.roadmap.pk
-    if request.user.account == task.roadmap.account:
+    if request.user == task.roadmap.account:#
         task.delete()
         return redirect('roadmap:roadmap', pk=roadmap_pk)
     raise PermissionDenied
@@ -74,7 +74,7 @@ def task_delete(request, pk):
 
 @login_required(login_url=reverse_lazy('account:login'))
 def roadmaps_show(request):
-    account = request.user.account
+    account = request.user#
     roadmaps = account.roadmap_set.all()
     return render(request, 'roadmaps.html', {'roadmaps': roadmaps})
 
@@ -82,14 +82,14 @@ def roadmaps_show(request):
 @login_required(login_url=reverse_lazy('account:login'))
 def roadmap_detail(request, pk):
     roadmap = get_object_or_404(Roadmap, pk=pk)
-    if roadmap.account == request.user.account:
+    if roadmap.account == request.user:#
         tasks = Task.objects.filter(roadmap=roadmap).order_by('state', 'estimate')
         return render(request, 'roadmap_detail.html', {'roadmap': roadmap, 'tasks': tasks})
     raise PermissionDenied
 
 @login_required(login_url=reverse_lazy('account:login'))
 def roadmap_stats(request):
-    account = request.user.account
+    account = request.user#
     roadmaps = account.roadmap_set.all()
 
     weeks = []
@@ -142,7 +142,7 @@ def roadmap_new(request):
         form = RoadmapForm(request.POST)
         if form.is_valid():
             roadmap = form.save(commit=False)
-            roadmap.account = request.user.account
+            roadmap.account = request.user#
             roadmap.save()
             return redirect('roadmap:roadmaps')
     else:
@@ -153,7 +153,7 @@ def roadmap_new(request):
 @login_required(login_url=reverse_lazy('account:login'))
 def roadmap_delete(request, pk):
     roadmap = get_object_or_404(Roadmap, pk=pk)
-    if roadmap.account == request.user.account:
+    if roadmap.account == request.user:
         roadmap.delete()
     else:
          raise PermissionDenied

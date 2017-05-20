@@ -6,9 +6,6 @@ from django.dispatch import receiver
 # https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 
 
-
-
-
 class User(AbstractUser):
 	email = models.EmailField(unique=True)
 	phone = models.CharField(max_length=15)
