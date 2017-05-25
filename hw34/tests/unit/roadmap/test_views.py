@@ -81,21 +81,34 @@ class TestRoadmapViews:
         response = views.task_update(request, task.id)
         assert response.status_code == 200
 
-    def test_task_update_post(self, task, user):
-        data = {'title': 'tested', 'estimate': datetime(2100, 1, 1, tzinfo=utc), 'state': 'in_progress'}
-
-        request = RequestFactory().post('/task/' + str(task.id) + '/edit/', data=data)
+    def test_task_new_get(self, roadmap, user):
+        request = RequestFactory().get('/roadmaps/' + str(roadmap.id) + '/task_new')
         request.user = user
-        response = views.task_update(request, task.id)
+        response = views.task_new(request, roadmap.id)
         assert response.status_code == 200
-       # task.refresh_from_db()
-        #assert task.title == 'tested'
 
     def test_roadmap_stats_get(self, user):
         request = RequestFactory().get('/roadmaps/stats')
         request.user = user
         response = views.roadmap_stats(request)
         assert response.status_code == 200
+"""
+    def test_task_update_post(self, task, user):
+        data = {'title': 'tested', 'estimate': datetime(2100, 1, 1, tzinfo=utc), 'state': 'in_progress'}
+
+        request = RequestFactory().post('/task/' + str(task.id) + '/edit/', data=data)
+        request.user = user
+        form = TaskEditForm(data, instance=task)
+        response = views.task_update(request, task.id)
+        assert form.is_valid()
+
+        assert response.status_code == 200
+        task.refresh_from_db()
+        #assert task.title == 'tested'"""
+
+
+
+
 
 
 

@@ -120,5 +120,5 @@ def roadmap_delete(request, pk):
     if roadmap.user == request.user:
         roadmap.delete()
     else:
-         raise PermissionDenied
+        raise PermissionDenied
     return redirect('roadmap:roadmaps')
